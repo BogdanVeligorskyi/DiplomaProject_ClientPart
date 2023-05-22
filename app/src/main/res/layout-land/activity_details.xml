@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/details_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="5dp"
+        android:text="RaspberryPi"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/details_device_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="192.168.0.115"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textview_select_sensor"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:text="Select sensor"
+        android:layout_marginStart="25dp"
+        android:textSize="18sp"/>
+
+    <Spinner
+        android:id="@+id/spinner_select_sensor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"/>
+
+    <TextView
+        android:id="@+id/textview_measurements"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="start"
+        android:text="Measurements"
+        android:layout_marginStart="25dp"
+        android:textSize="18sp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/border">
+        <TextView
+            android:id="@+id/textview_measurements_results"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="id=1, datetime=2022.05.18 14:54:03 value=23.9\nid=2, datetime=2022.05.18 14:55:03 value=24.0"/>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select bounds of measurements for further processing:"
+        android:layout_gravity="start"
+        android:layout_marginStart="25dp"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/edittext_first_bound"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="Text Example: 2022-05-02"/>
+
+    <EditText
+        android:id="@+id/edittext_second_bound"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="Text Example: 2022-05-20"/>
+
+    <Button
+        android:id="@+id/statistics_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Statistics"/>
+
+</LinearLayout>
+</ScrollView>

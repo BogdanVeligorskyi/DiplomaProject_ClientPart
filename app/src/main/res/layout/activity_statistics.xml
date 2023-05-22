@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Statistics for ..."
+        android:textStyle="bold"
+        android:textSize="23sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Since ... to ..."
+        android:textSize="18sp"/>
+
+    <TableRow
+        android:layout_gravity="center"
+        android:weightSum="4.0">
+        <TextView
+            android:layout_weight="2.0"
+            android:gravity="center_horizontal"
+            android:text="Arithmetic Mean"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:text="25.0"
+            android:layout_weight="2.0"/>
+    </TableRow>
+    <TableRow
+        android:layout_gravity="center"
+        android:weightSum="4.0">
+        <TextView
+            android:layout_weight="2.0"
+            android:gravity="center_horizontal"
+            android:text="Dispersion"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:text="25.0"
+            android:layout_weight="2.0"/>
+    </TableRow>
+    <TableRow
+        android:layout_gravity="center"
+        android:weightSum="4.0">
+        <TextView
+            android:layout_weight="2.0"
+            android:gravity="center_horizontal"
+            android:text="Standard Deviation"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:text="25.0"
+            android:layout_weight="2.0"/>
+    </TableRow>
+    <TableRow
+        android:layout_gravity="center"
+        android:weightSum="4.0">
+        <TextView
+            android:layout_weight="2.0"
+            android:gravity="center_horizontal"
+            android:text="Maximum Value"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:text="25.0"
+            android:layout_weight="2.0"/>
+    </TableRow>
+    <TableRow
+        android:layout_gravity="center"
+        android:weightSum="4.0">
+        <TextView
+            android:layout_weight="2.0"
+            android:gravity="center_horizontal"
+            android:text="Minimum value"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:text="25.0"
+            android:layout_weight="2.0"/>
+    </TableRow>
+
+</TableLayout>

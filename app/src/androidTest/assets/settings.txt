@@ -1,0 +1,3 @@
+notifications=0
+language=1
+theme=1

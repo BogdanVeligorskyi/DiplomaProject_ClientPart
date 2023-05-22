@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:paddingTop="5dp"
+        android:textSize="23sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Main Menu" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:text="App version: 1.0"/>
+
+    <ImageButton
+        android:id="@+id/options_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="25dp"
+        android:scaleType="fitCenter"
+        android:background="@color/white"
+        android:src="@drawable/icon_options" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="25dp"
+        android:textSize="18sp"
+        android:text="Available devices"/>
+
+    <ListView
+        android:id="@+id/devices_listview"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"/>
+
+    <Button
+        android:id="@+id/scan_devices_button"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/purple_500"
+        android:textSize="18sp"
+        android:text="+"/>
+
+</LinearLayout>
