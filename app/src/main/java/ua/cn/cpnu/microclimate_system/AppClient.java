@@ -16,6 +16,8 @@ public class AppClient implements Runnable {
     public static final int ACTION_GET_DEVICES = 1;
     public static final int ACTION_GET_MEASUREMENTS = 2;
 
+    public static boolean IS_SUCCESS = false;
+
     // server data
     private final String SERVER_IP = "192.168.0.115";
     private final int PORT = 50013;
@@ -37,6 +39,7 @@ public class AppClient implements Runnable {
         this.sensor_id = 0;
         this.datetime_1 = null;
         this.datetime_2 = null;
+        IS_SUCCESS = false;
     }
 
     // constructor for ACTION 2 (get measurements from server)
@@ -47,6 +50,7 @@ public class AppClient implements Runnable {
         this.sensor_id = sensor_id;
         this.datetime_1 = datetime_1;
         this.datetime_2 = datetime_2;
+        IS_SUCCESS = false;
     }
 
     // try to connect to server
@@ -86,6 +90,7 @@ public class AppClient implements Runnable {
                 FileProcessing.saveSensors(context, response);
 
                 stopConnection();
+                IS_SUCCESS = true;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -100,6 +105,7 @@ public class AppClient implements Runnable {
                 response = response.substring(response.indexOf(":") + 1);
                 FileProcessing.saveMeasurements(context, response);
                 stopConnection();
+                IS_SUCCESS = true;
 
             } catch (IOException e) {
                 e.printStackTrace();

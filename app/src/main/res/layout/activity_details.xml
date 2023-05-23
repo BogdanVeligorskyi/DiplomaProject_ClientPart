@@ -9,8 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="5dp"
+        android:paddingTop="25dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingBottom="5dp"
         android:text="RaspberryPi"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -44,7 +46,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select bounds of measurements for further processing:"
+        android:text="Select date (time) bounds of measurements for further processing:"
         android:layout_gravity="start"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
@@ -56,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:text="Text Example: 02-05-2023"
+        android:text="02-05-2023"
         android:inputType="time" />
 
     <EditText
@@ -65,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:text="Text Example: 04-05-2023"
+        android:text="04-05-2023"
         android:inputType="time"/>
 
     <Button

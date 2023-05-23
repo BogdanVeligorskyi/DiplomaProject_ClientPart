@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String POSITION = "POSITION";
 
     private ListView listView;
-    private CustomListAdapter cla;
     private String[] devicesArray = {};
     private String[] ipsArray = {};
     private int[] options = null;
@@ -84,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if (AppClient.IS_SUCCESS) {
+                        Toast.makeText(context,"Data were successfully updated!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context,"Server doesn`t respond, so earlier saved data were downloaded!", Toast.LENGTH_LONG).show();
+                    }
 
                     loadData();
 
@@ -95,13 +99,17 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.devices_listview);
         listView.setOnItemClickListener(
                 (adapterView, view, position, l) -> {
-                    Intent intent = new Intent(MainActivity.this,
-                            DetailsActivity.class);
-                    Log.d("POSITION", ""+position);
-                    intent.putExtra(MainActivity.ROOMS_ARRAY, roomsArr);
-                    intent.putExtra(MainActivity.SENSORS_ARRAY, sensorsArr);
-                    intent.putExtra(MainActivity.POSITION, position);
-                    startActivity(intent);
+                    if (!checkForSensors(ipsArray, position)) {
+                        Toast.makeText(getApplicationContext(), "This device has no sensors!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent intent = new Intent(MainActivity.this,
+                                DetailsActivity.class);
+                        Log.d("POSITION", "" + position);
+                        intent.putExtra(MainActivity.ROOMS_ARRAY, roomsArr);
+                        intent.putExtra(MainActivity.SENSORS_ARRAY, sensorsArr);
+                        intent.putExtra(MainActivity.POSITION, position);
+                        startActivity(intent);
+                    }
                 });
 
         checkTheme();
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 ipsArray[i] = roomsArr[i].getDeviceIP();
             }
         }
-        cla = new CustomListAdapter(this, devicesArray, ipsArray);
+        CustomListAdapter cla = new CustomListAdapter(this, devicesArray, ipsArray);
         listView.setAdapter(cla);
     }
 
@@ -174,6 +182,23 @@ public class MainActivity extends AppCompatActivity {
         if (sensorsArr == null) {
             Toast.makeText(getApplicationContext(), "Sensors haven`t been found!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private boolean checkForSensors(String[] ipsArray, int position) {
+        String ip = ipsArray[position];
+        int id = 0;
+        for (Room room : roomsArr) {
+            if (ip == room.getDeviceIP()) {
+                id = room.getId();
+                break;
+            }
+        }
+        for (Sensor sensor : sensorsArr) {
+            if (id == sensor.getRoomId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

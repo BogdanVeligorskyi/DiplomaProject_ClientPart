@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
@@ -108,7 +110,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         findViewById(R.id.find_measurements_button).setOnClickListener(button -> {
                     Context context = getApplicationContext();
-                    //butFind.setEnabled(false);
                     datetime_1 = edText_1.getText().toString();
                     datetime_2 = edText_2.getText().toString();
                     Log.d("current_sensor_id=", ""+current_sensor_id);
@@ -119,21 +120,34 @@ public class DetailsActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if (AppClient.IS_SUCCESS) {
+                        Toast.makeText(context,"Data were successfully downloaded!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context,"Server doesn`t respond (or incorrect input), so earlier saved data were downloaded!", Toast.LENGTH_LONG).show();
+                    }
+                    /*try {
+                        FileProcessing.saveMeasurements(context, "");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
                     try {
                         measurementsArr = FileProcessing.loadMeasurements(getApplicationContext());
-                        //butFind.setEnabled(true);
-                        butStat.setEnabled(true);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    String text = "";
-                    Log.d("MEAS", ""+measurementsArr[0].getSensorId());
-                    String unit_measurement = sensorsArr[measurementsArr[0].getSensorId()-1].getMeasureUnit();
-                    for (Measurement measurement : measurementsArr) {
-                        text += "Datetime: " + measurement.getDateime() + ", ";
-                        text += "Value: " + measurement.getValue() + unit_measurement + "\n";
+                    if (measurementsArr == null) {
+                        Toast.makeText(context,"Measurements haven`t been found!", Toast.LENGTH_LONG).show();
+                    } else {
+                        String text = "";
+                        Log.d("MEAS", ""+measurementsArr[0].getSensorId());
+                        String unit_measurement = sensorsArr[measurementsArr[0].getSensorId()-1].getMeasureUnit();
+                        for (Measurement measurement : measurementsArr) {
+                            text += "Datetime: " + measurement.getDateime() + ", ";
+                            text += "Value: " + measurement.getValue() + unit_measurement + "\n";
+                        }
+                        tvResults.setText(text);
+                        butStat.setEnabled(true);
                     }
-                    tvResults.setText(text);
                 });
 
     }
@@ -143,6 +157,5 @@ public class DetailsActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArray(MainActivity.ROOMS_ARRAY, roomsArr);
         outState.putParcelableArray(MainActivity.SENSORS_ARRAY, sensorsArr);
-
     }
 }
