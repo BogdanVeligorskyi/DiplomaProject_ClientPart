@@ -3,12 +3,13 @@ package ua.cn.cpnu.microclimate_system;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+// Room class
 public class Room implements Parcelable {
 
-    private int id;
-    private String name;
-    private String device_ip;
-    private String device;
+    private final int id;
+    private final String name;
+    private final String device_ip;
+    private final String device;
 
     public Room(int id, String name, String device_ip, String device) {
         this.id = id;

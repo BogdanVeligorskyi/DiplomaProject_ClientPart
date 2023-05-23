@@ -17,7 +17,7 @@ public class CustomListAdapter extends ArrayAdapter {
     // to store the list of device names
     private final String[] devicesArray;
 
-    // to store the list of universities` countries
+    // to store the list of IPs
     private final String[] ipsArray;
 
     public CustomListAdapter(Activity context, String[] deviceArrayParam, String[] ipArrayParam){

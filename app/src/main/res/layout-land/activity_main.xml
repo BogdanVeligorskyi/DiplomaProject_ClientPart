@@ -47,7 +47,7 @@
 
     <Button
         android:id="@+id/scan_devices_button"
-        android:layout_marginTop="2dp"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/purple_500"

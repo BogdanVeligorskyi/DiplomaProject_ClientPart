@@ -14,6 +14,7 @@
         android:text="RaspberryPi"
         android:textSize="25sp"
         android:textStyle="bold"/>
+
     <TextView
         android:id="@+id/details_device_ip"
         android:layout_width="wrap_content"
@@ -55,7 +56,8 @@
         android:layout_width="match_parent"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:text="Text Example: 2022-05-02"/>
+        android:text="Text Example: 02-05-2023"
+        android:inputType="time" />
 
     <EditText
         android:id="@+id/edittext_second_bound"
@@ -63,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:text="Text Example: 2022-05-20"/>
+        android:text="Text Example: 04-05-2023"
+        android:inputType="time"/>
 
     <Button
         android:id="@+id/find_measurements_button"
@@ -93,10 +96,8 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:textAlignment="center"
-        android:text=""/>
+        android:textSize="15sp"/>
     </ScrollView>
-
-
 
     <Button
         android:id="@+id/statistics_button"

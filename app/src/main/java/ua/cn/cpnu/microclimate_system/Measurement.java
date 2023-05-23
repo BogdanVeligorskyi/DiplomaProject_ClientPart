@@ -3,11 +3,12 @@ package ua.cn.cpnu.microclimate_system;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+// Measurement class
 public class Measurement implements Parcelable {
-    private int id;
-    private int sensor_id;
-    private float value;
-    private String date_time;
+    private final int id;
+    private final int sensor_id;
+    private final float value;
+    private final String date_time;
 
     public Measurement(int id, int sensor_id, float value, String date_time) {
         this.id = id;

@@ -3,13 +3,14 @@ package ua.cn.cpnu.microclimate_system;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+// Sensor class
 public class Sensor implements Parcelable {
 
-    private int id;
-    private int room_id;
-    private String name;
-    private String measure;
-    private String measure_unit;
+    private final int id;
+    private final int room_id;
+    private final String name;
+    private final String measure;
+    private final String measure_unit;
 
     public Sensor(int id, int room_id, String name, String measure, String measure_unit) {
         this.id = id;
