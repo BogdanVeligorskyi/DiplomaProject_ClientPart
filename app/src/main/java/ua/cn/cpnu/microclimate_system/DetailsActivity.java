@@ -148,7 +148,59 @@ public class DetailsActivity extends AppCompatActivity {
                         tvResults.setText(text);
                         butStat.setEnabled(true);
                     }
+
                 });
+
+        findViewById(R.id.actual_measurements_button).setOnClickListener(button -> {
+            Context context = getApplicationContext();
+            String ip = tvIP.getText().toString();
+            Log.d("IP", ip);
+            int id = 0;
+            for (int i = 0; i < roomsArr.length; i++) {
+                if (roomsArr[i].getDeviceIP() == ip) {
+                    id = roomsArr[i].getId();
+                    break;
+                }
+            }
+            int sensorsNum = 0;
+            for (int j = 0; j < sensorsArr.length; j++) {
+                if (sensorsArr[j].getRoomId() == id) {
+                    sensorsNum++;
+                }
+            }
+            Log.d("sensors", ""+sensorsNum);
+            new Thread(new AppClient(context, AppClient.ACTION_GET_ACTUAL, id, sensorsNum)).start();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                measurementsArr = FileProcessing.loadMeasurements(getApplicationContext());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (AppClient.IS_SUCCESS) {
+                Toast.makeText(context,"Data were successfully downloaded!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context,"Server doesn`t respond (or incorrect input), so earlier saved data were downloaded!", Toast.LENGTH_LONG).show();
+            }
+            if (measurementsArr == null) {
+                Toast.makeText(context,"Measurements haven`t been found!", Toast.LENGTH_LONG).show();
+            } else {
+
+                String text = "";
+                Log.d("MEAS", ""+measurementsArr[0].getSensorId());
+                String unit_measurement = sensorsArr[measurementsArr[0].getSensorId()-1].getMeasureUnit();
+                for (Measurement measurement : measurementsArr) {
+                    text += "sId : " + measurement.getSensorId() + ", ";
+                    text += "Datetime: " + measurement.getDateime() + ", ";
+                    text += "Value: " + measurement.getValue() + unit_measurement + "\n";
+                }
+                tvResults.setText(text);
+                butStat.setEnabled(true);
+            }
+        });
 
     }
 
