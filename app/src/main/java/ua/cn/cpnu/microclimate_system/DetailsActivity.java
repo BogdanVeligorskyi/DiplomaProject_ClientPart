@@ -2,6 +2,7 @@ package ua.cn.cpnu.microclimate_system;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -34,6 +35,13 @@ public class DetailsActivity extends AppCompatActivity {
     private EditText edText_2;
     private ArrayAdapter ad;
     private Button butStat;
+
+    public static final String SENSOR_NAME = "SENSOR_NAME";
+    public static final String DATETIME_1 = "DATETIME_1";
+    public static final String DATETIME_2 = "DATETIME_2";
+    public static final String MEASUREMENTS_ARR = "MEASUREMENTS_ARR";
+    public static final String MEASURE_NAME = "MEASURE_NAME";
+    public static final String MEASUREMENT_UNIT = "MEASUREMENT_UNIT";
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -149,6 +157,19 @@ public class DetailsActivity extends AppCompatActivity {
 
         });
 
+        findViewById(R.id.statistics_button).setOnClickListener(button -> {
+            Intent intent = new Intent
+                    (this, StatisticsActivity.class);
+            intent.putExtra(SENSOR_NAME, sensorsArr[measurementsArr[0].getSensorId()-1].getName());
+            intent.putExtra(DATETIME_1, datetime_1);
+            intent.putExtra(DATETIME_2, datetime_2);
+            intent.putExtra(MEASUREMENTS_ARR, measurementsArr);
+            intent.putExtra(MEASURE_NAME, sensorsArr[measurementsArr[0].getSensorId()-1].getName());
+            intent.putExtra(MEASUREMENT_UNIT, sensorsArr[measurementsArr[0].getSensorId()-1].getMeasureUnit());
+            startActivity(intent);
+
+        });
+
     }
 
     // set spinner (add all sensors of room)
@@ -174,7 +195,6 @@ public class DetailsActivity extends AppCompatActivity {
                 sensorsStr);
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
-
 
     private void findMeasurements(Context context) {
         try {

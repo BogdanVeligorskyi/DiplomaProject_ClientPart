@@ -6,14 +6,13 @@
     <uses-permission android:name = "android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="Microclimate Monitoring System"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Microclimate_System"
-        tools:targetApi="31">
+        tools:targetApi="21">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -39,6 +38,15 @@
         <activity
             android:name=".DetailsActivity"
             android:label="Details"
+            android:parentActivityName=".MainActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".StatisticsActivity"
+            android:label="Statistics"
             android:parentActivityName=".MainActivity"
             android:exported="true">
             <meta-data
