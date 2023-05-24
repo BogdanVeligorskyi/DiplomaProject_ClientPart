@@ -15,6 +15,7 @@ public class FileProcessing {
     public static final String DEVICES_FILENAME = "devices.txt";
     public static final String SENSORS_FILENAME = "sensors.txt";
     public static final String MEASUREMENTS_FILENAME = "measurements.txt";
+    public static final String ACTUAL_MEASUREMENTS_FILENAME = "actualMeasurements.txt";
 
     // load devices list from devices.txt file
     public static Room[] loadDevices(Context context) throws IOException {
@@ -164,6 +165,44 @@ public class FileProcessing {
         return measurementsArr;
     }
 
+    // load actual measurements from actualMeasurements.txt file
+    public static Measurement[] loadActualMeasurements(Context context) throws IOException {
+        InputStream is = context.openFileInput(ACTUAL_MEASUREMENTS_FILENAME);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        String s;
+        int measurementsNum = 0;
+        // count rooms number
+        while ((s = reader.readLine()) != null) {
+            if (s.length() == 0) {
+                return null;
+            }
+            measurementsNum++;
+        }
+        s = "";
+        InputStream newIs = context.openFileInput(ACTUAL_MEASUREMENTS_FILENAME);
+        BufferedReader newReader = new BufferedReader(new InputStreamReader(newIs));
+        Measurement[] measurementsArr = new Measurement[measurementsNum];
+        int counter = 0;
+        while ((s = newReader.readLine()) != null) {
+            String[] measurementPair = s.split(",");
+            String[] valuesForMeasuremnetObject = new String[4];
+            for (int k = 0; k < 4; k++) {
+                String[] measurementDetailData = measurementPair[k].split("=");
+                valuesForMeasuremnetObject[k] = measurementDetailData[1];
+            }
+            measurementsArr[counter] = new Measurement(
+                    Integer.parseInt(valuesForMeasuremnetObject[0]),
+                    Integer.parseInt(valuesForMeasuremnetObject[1]),
+                    Float.parseFloat(valuesForMeasuremnetObject[2]),
+                    valuesForMeasuremnetObject[3]);
+            counter++;
+        }
+        Log.d("Measurement detail", ""+measurementsArr[0].getDateime());
+
+        return measurementsArr;
+    }
+
+
     // save options to settings.txt file
     public static void saveOptions(Context context, int[] options) throws IOException {
         try {
@@ -187,6 +226,24 @@ public class FileProcessing {
             OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter
                             (context.openFileOutput(MEASUREMENTS_FILENAME,
+                                    Context.MODE_PRIVATE));
+            String[] measurementsStr = text.split(";");
+            for (String s : measurementsStr) {
+                outputStreamWriter.write(s + "\n");
+            }
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e);
+        }
+    }
+
+    // save actual measurements to measurements.txt file
+    public static void saveActualMeasurements(Context context, String text) throws IOException {
+        try {
+            OutputStreamWriter outputStreamWriter =
+                    new OutputStreamWriter
+                            (context.openFileOutput(ACTUAL_MEASUREMENTS_FILENAME,
                                     Context.MODE_PRIVATE));
             String[] measurementsStr = text.split(";");
             for (String s : measurementsStr) {

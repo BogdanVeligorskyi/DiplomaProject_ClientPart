@@ -2,7 +2,6 @@ package ua.cn.cpnu.microclimate_system;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,7 +20,7 @@ public class AppClient implements Runnable {
 
     // server data
     private final String SERVER_IP = "192.168.0.115";
-    private final int PORT = 50016;
+    private final int PORT = 50020;
 
     // variables and objects
     private Socket clientSocket;
@@ -32,10 +31,10 @@ public class AppClient implements Runnable {
     private final int sensor_id;
     private final String datetime_1;
     private final String datetime_2;
-    private int room_id;
-    private int sensorsNum;
+    private final int room_id;
+    private final int sensorsNum;
 
-    // constructor for ACTION 1 (get devices from server)
+    // constructor for ACTION 1 (get devices and sensors from server)
     public AppClient(Context context, int action) {
         this.context = context;
         this.action = action;
@@ -69,13 +68,14 @@ public class AppClient implements Runnable {
         this.datetime_2 = null;
         this.room_id = room_id;
         this.sensorsNum = sensors_num;
-
         IS_SUCCESS = false;
     }
 
     // try to connect to server
     private void startConnection(String ip, int port) throws IOException {
-        clientSocket = new Socket(ip, port);
+        while (clientSocket == null) {
+            clientSocket = new Socket(ip, port);
+        }
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
@@ -101,16 +101,18 @@ public class AppClient implements Runnable {
                 startConnection(SERVER_IP, PORT);
                 String response = sendMessage("GET_DEVICES");
                 Log.d("RECEIVED devices", response);
-                response = response.substring(response.indexOf(":") + 1);
-                FileProcessing.saveDevices(context, response);
-
+                if (!response.startsWith("No devices")) {
+                    response = response.substring(response.indexOf(":") + 1);
+                    FileProcessing.saveDevices(context, response);
+                }
                 response = sendMessage("GET_SENSORS");
                 Log.d("RECEIVED sensors", response);
-                response = response.substring(response.indexOf(":") + 1);
-                FileProcessing.saveSensors(context, response);
-
+                if (!response.startsWith("No sensors")) {
+                    response = response.substring(response.indexOf(":") + 1);
+                    FileProcessing.saveSensors(context, response);
+                    IS_SUCCESS = true;
+                }
                 stopConnection();
-                IS_SUCCESS = true;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -122,11 +124,12 @@ public class AppClient implements Runnable {
                 String response = sendMessage("GET_MEASUREMENTS:" + sensor_id + "," + datetime_1
                         + "," + datetime_2);
                 Log.d("RECEIVED measurements", response);
-                response = response.substring(response.indexOf(":") + 1);
-                FileProcessing.saveMeasurements(context, response);
+                if (!response.startsWith("No measurements")) {
+                    response = response.substring(response.indexOf(":") + 1);
+                    FileProcessing.saveMeasurements(context, response);
+                    IS_SUCCESS = true;
+                }
                 stopConnection();
-                IS_SUCCESS = true;
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -136,10 +139,12 @@ public class AppClient implements Runnable {
                 startConnection(SERVER_IP, PORT);
                 String response = sendMessage("GET_ACTUAL:" + room_id + "," + sensorsNum);
                 Log.d("RECEIVED measurements", response);
-                response = response.substring(response.indexOf(":") + 1);
-                FileProcessing.saveMeasurements(context, response);
+                if (!response.startsWith("No measurements")) {
+                    response = response.substring(response.indexOf(":") + 1);
+                    FileProcessing.saveActualMeasurements(context, response);
+                    IS_SUCCESS = true;
+                }
                 stopConnection();
-                IS_SUCCESS = true;
 
             } catch (IOException e) {
                 e.printStackTrace();

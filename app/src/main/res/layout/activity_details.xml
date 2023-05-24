@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,11 +28,11 @@
 
     <TextView
         android:id="@+id/textview_select_sensor"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:text="Select sensor"
         android:layout_marginStart="25dp"
+        android:text="Select sensor"
         android:textSize="18sp"/>
 
     <Spinner
@@ -46,16 +47,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select date (time) bounds of measurements for further processing:"
         android:layout_gravity="start"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
+        android:text="Select date (time) bounds of measurements for further processing:"
         android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/edittext_first_bound"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:text="02-05-2023"
@@ -63,8 +64,8 @@
 
     <EditText
         android:id="@+id/edittext_second_bound"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:text="04-05-2023"
@@ -86,11 +87,11 @@
 
     <TextView
         android:id="@+id/textview_measurements"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:text="Measurements"
         android:layout_marginStart="25dp"
+        android:text="Measurements"
         android:textSize="18sp"/>
 
     <ScrollView
@@ -101,10 +102,9 @@
         android:id="@+id/textview_measurements_results"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:textAlignment="center"
+        android:padding="5dp"
         android:textSize="15sp"/>
     </ScrollView>
 
