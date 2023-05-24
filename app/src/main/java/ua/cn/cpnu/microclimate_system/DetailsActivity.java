@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// Details Activity where you can make a request for measurements
 public class DetailsActivity extends AppCompatActivity {
 
     private Room[] roomsArr;

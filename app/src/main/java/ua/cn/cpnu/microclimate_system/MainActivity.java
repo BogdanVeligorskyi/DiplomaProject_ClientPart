@@ -8,11 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
 
+// Main Activity which looks like main menu
 public class MainActivity extends AppCompatActivity {
 
     // options
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private int[] options = null;
     private Room[] roomsArr = null;
     private Sensor[] sensorsArr = null;
+    ImageButton butOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         loadData();
+
+        butOptions = findViewById(R.id.options_button);
 
         // 'Options' button
         findViewById(R.id.options_button)
@@ -149,9 +155,13 @@ public class MainActivity extends AppCompatActivity {
         if (options[2] == 1) {
             AppCompatDelegate.setDefaultNightMode
                     (AppCompatDelegate.MODE_NIGHT_YES);
+            butOptions.setImageResource(R.drawable.icon_options_dark);
+
         } else {
             AppCompatDelegate.setDefaultNightMode
                     (AppCompatDelegate.MODE_NIGHT_NO);
+            butOptions.setImageResource(R.drawable.icon_options);
+
         }
     }
 
