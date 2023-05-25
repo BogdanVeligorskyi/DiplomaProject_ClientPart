@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     // objects
     public static final String ROOMS_ARRAY = "ROOMS_ARRAY";
     public static final String SENSORS_ARRAY = "SENSORS_ARRAY";
-
     public static final String POSITION = "POSITION";
 
     private ListView listView;
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private int[] options = null;
     private Room[] roomsArr = null;
     private Sensor[] sensorsArr = null;
-    ImageButton butOptions;
+    private ImageButton butOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +124,69 @@ public class MainActivity extends AppCompatActivity {
         initListView();
     }
 
+    // switch theme after closing 'Options' screen if it was changed
+    private void checkTheme() {
+        if (options[2] == 1) {
+            AppCompatDelegate.setDefaultNightMode
+                    (AppCompatDelegate.MODE_NIGHT_YES);
+            butOptions.setImageResource(R.drawable.icon_options_dark);
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode
+                    (AppCompatDelegate.MODE_NIGHT_NO);
+            butOptions.setImageResource(R.drawable.icon_options);
+
+        }
+    }
+
+    // init devices (rooms) list in main menu
+    private void initListView() {
+        if (roomsArr != null) {
+            devicesArray = new String[roomsArr.length];
+            ipsArray = new String[roomsArr.length];
+            for (int i = 0; i < roomsArr.length; i++) {
+                devicesArray[i] = roomsArr[i].getDevice() + " | " + roomsArr[i].getName();
+                ipsArray[i] = roomsArr[i].getDeviceIP();
+            }
+        }
+        CustomListAdapter cla = new CustomListAdapter(this, devicesArray, ipsArray);
+        listView.setAdapter(cla);
+    }
+
+    // try to load rooms list and sensors list
+    private void loadData() {
+        try {
+            roomsArr = FileProcessing.loadDevices(getApplicationContext());
+            sensorsArr = FileProcessing.loadSensors(getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (roomsArr == null) {
+            Toast.makeText(getApplicationContext(), "Devices haven`t been found!", Toast.LENGTH_LONG).show();
+        }
+        if (sensorsArr == null) {
+            Toast.makeText(getApplicationContext(), "Sensors haven`t been found!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // check whether at least one sensor is available
+    private boolean checkForSensors(String[] ipsArray, int position) {
+        String ip = ipsArray[position];
+        int id = 0;
+        for (Room room : roomsArr) {
+            if (ip == room.getDeviceIP()) {
+                id = room.getId();
+                break;
+            }
+        }
+        for (Sensor sensor : sensorsArr) {
+            if (id == sensor.getRoomId()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // returning modified options from other activities
     public void onActivityResult
@@ -152,67 +213,6 @@ public class MainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         checkTheme();
-    }
-
-    private void checkTheme() {
-        // switch theme after closing 'Options' screen if it was changed
-        if (options[2] == 1) {
-            AppCompatDelegate.setDefaultNightMode
-                    (AppCompatDelegate.MODE_NIGHT_YES);
-            butOptions.setImageResource(R.drawable.icon_options_dark);
-
-        } else {
-            AppCompatDelegate.setDefaultNightMode
-                    (AppCompatDelegate.MODE_NIGHT_NO);
-            butOptions.setImageResource(R.drawable.icon_options);
-
-        }
-    }
-
-    private void initListView() {
-        if (roomsArr != null) {
-            devicesArray = new String[roomsArr.length];
-            ipsArray = new String[roomsArr.length];
-            for (int i = 0; i < roomsArr.length; i++) {
-                devicesArray[i] = roomsArr[i].getDevice() + " | " + roomsArr[i].getName();
-                ipsArray[i] = roomsArr[i].getDeviceIP();
-            }
-        }
-        CustomListAdapter cla = new CustomListAdapter(this, devicesArray, ipsArray);
-        listView.setAdapter(cla);
-    }
-
-    private void loadData() {
-        try {
-            roomsArr = FileProcessing.loadDevices(getApplicationContext());
-            sensorsArr = FileProcessing.loadSensors(getApplicationContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (roomsArr == null) {
-            Toast.makeText(getApplicationContext(), "Devices haven`t been found!", Toast.LENGTH_LONG).show();
-        }
-        if (sensorsArr == null) {
-            Toast.makeText(getApplicationContext(), "Sensors haven`t been found!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private boolean checkForSensors(String[] ipsArray, int position) {
-        String ip = ipsArray[position];
-        int id = 0;
-        for (Room room : roomsArr) {
-            if (ip == room.getDeviceIP()) {
-                id = room.getId();
-                break;
-            }
-        }
-        for (Sensor sensor : sensorsArr) {
-            if (id == sensor.getRoomId()) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

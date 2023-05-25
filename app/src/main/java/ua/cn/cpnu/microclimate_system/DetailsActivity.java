@@ -3,6 +3,7 @@ package ua.cn.cpnu.microclimate_system;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +24,11 @@ import java.util.ArrayList;
 // Details Activity where you can make a request for measurements
 public class DetailsActivity extends AppCompatActivity {
 
+    // objects and variables
     private Room[] roomsArr;
     private Sensor[] sensorsArr;
     private Measurement[] measurementsArr;
-    private int[] options = new int[3];
+    private final int[] options = new int[3];
     private int position = 0;
     private int current_sensor_id;
     private String datetime_1;
@@ -38,6 +41,7 @@ public class DetailsActivity extends AppCompatActivity {
     private ArrayAdapter ad;
     private Button butStat;
 
+    // strings
     public static final String SENSOR_NAME = "SENSOR_NAME";
     public static final String DATETIME_1 = "DATETIME_1";
     public static final String DATETIME_2 = "DATETIME_2";
@@ -211,6 +215,7 @@ public class DetailsActivity extends AppCompatActivity {
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
+    // find measurements for specific time interval
     private void findMeasurements(Context context) {
         try {
             measurementsArr = FileProcessing.loadMeasurements(getApplicationContext());
@@ -231,7 +236,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    // find measurements
+    // find actual measurements
     private void findActualMeasurements(Context context) {
         try {
             measurementsArr = FileProcessing.loadActualMeasurements(getApplicationContext());
@@ -242,13 +247,37 @@ public class DetailsActivity extends AppCompatActivity {
             Toast.makeText(context,"Measurements haven`t been found!", Toast.LENGTH_LONG).show();
         } else {
             String text = "";
+            boolean is_norm = true;
             for (Measurement measurement : measurementsArr) {
                 String measurement_unit = sensorsArr[measurement.getSensorId()-1].getMeasureUnit();
+                String measure = sensorsArr[measurement.getSensorId()-1].getMeasure();
+                if (measure.contains("CO") && measurement.getValue() > 55.0) {
+                    is_norm = false;
+                }
                 text += "Sensor id: " + measurement.getSensorId() + ", \t";
                 text += measurement.getDateime() + ", \t";
                 text += measurement.getValue() + measurement_unit + "\n";
             }
             tvResults.setText(text);
+            Log.d("OPTIONS", ""+options[0]);
+
+            // play sound for some seconds
+            if (!is_norm && options[0] == 1) {
+                for (int i = 0; i < 40; i++) {
+                    MediaPlayer music = MediaPlayer.create(DetailsActivity.this, R.raw.notification);
+                    music.start();
+                }
+                AlertDialog.Builder dialog =
+                        new AlertDialog.Builder(this);
+                dialog.setCancelable(false);
+                dialog.setIcon(R.mipmap.ic_launcher_round);
+                dialog.setTitle("Warning message");
+                dialog.setMessage
+                            ("CO concentration is very high!");
+                dialog.setPositiveButton("Ok", ((dialogInterface, i) -> finish()));
+                dialog.create();
+                dialog.show();
+            }
         }
     }
 
