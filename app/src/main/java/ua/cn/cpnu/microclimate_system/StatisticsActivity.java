@@ -2,6 +2,7 @@ package ua.cn.cpnu.microclimate_system;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class StatisticsActivity extends AppCompatActivity {
 
     private Measurement[] measurementsArr;
+    private final int[] options = new int[3];
     private String datetime_1;
     private String datetime_2;
     private String measurement_unit;
@@ -34,12 +36,19 @@ public class StatisticsActivity extends AppCompatActivity {
             measurement_unit = savedInstanceState.getString(DetailsActivity.MEASUREMENT_UNIT);
             sensor_name = savedInstanceState.getString(DetailsActivity.SENSOR_NAME);
             measure_name = savedInstanceState.getString(DetailsActivity.MEASURE_NAME);
+            options[0] = savedInstanceState.getInt(MainActivity.IS_NOTIFICATIONS_ON);
+            options[1] = savedInstanceState.getInt(MainActivity.IS_UKRAINIAN_ON);
+            options[2] = savedInstanceState.getInt(MainActivity.IS_DARK_MODE_ON);
+            Log.d("OPTIONS", "options[2]="+options[2]);
         } else {
             datetime_1 = getIntent().getStringExtra(DetailsActivity.DATETIME_1);
             datetime_2 = getIntent().getStringExtra(DetailsActivity.DATETIME_2);
             measurement_unit = getIntent().getStringExtra(DetailsActivity.MEASUREMENT_UNIT);
             sensor_name = getIntent().getStringExtra(DetailsActivity.SENSOR_NAME);
             measure_name = getIntent().getStringExtra(DetailsActivity.MEASURE_NAME);
+            options[0] = getIntent().getIntExtra(MainActivity.IS_NOTIFICATIONS_ON, 0);
+            options[1] = getIntent().getIntExtra(MainActivity.IS_UKRAINIAN_ON, 0);
+            options[2] = getIntent().getIntExtra(MainActivity.IS_DARK_MODE_ON, 0);
             Parcelable[] measurementsParc = getIntent().getParcelableArrayExtra(DetailsActivity.MEASUREMENTS_ARR);
             measurementsArr = new Measurement[measurementsParc.length];
             for (int i = 0; i < measurementsParc.length; i++) {
@@ -52,6 +61,7 @@ public class StatisticsActivity extends AppCompatActivity {
         TextView tvDeviation = findViewById(R.id.standard_deviation_value);
         TextView tvMax = findViewById(R.id.maximum_value);
         TextView tvMin = findViewById(R.id.minimum_value);
+        Log.d("OPTIONS", "options[2]="+options[2]);
 
         if (measurementsArr != null) {
             double avg = findArithmeticMean();
@@ -82,6 +92,14 @@ public class StatisticsActivity extends AppCompatActivity {
         mpLineChart.setData(data);
         mpLineChart.invalidate();
         mpLineChart.setDrawGridBackground(false);
+        Log.d("OPTIONS", "options[2]="+options[2]);
+
+        if (options[2] == 1) {
+            mpLineChart.getAxisLeft().setTextColor(getResources().getColor(R.color.white));
+            mpLineChart.getXAxis().setTextColor(getResources().getColor(R.color.white));
+            mpLineChart.getLegend().setTextColor(getResources().getColor(R.color.white));
+            mpLineChart.getDescription().setTextColor(getResources().getColor(R.color.white));
+        }
 
     }
 
@@ -102,6 +120,9 @@ public class StatisticsActivity extends AppCompatActivity {
         outState.putString(DetailsActivity.MEASURE_NAME, measure_name);
         outState.putString(DetailsActivity.SENSOR_NAME, sensor_name);
         outState.putString(DetailsActivity.MEASUREMENT_UNIT, measurement_unit);
+        outState.putInt(MainActivity.IS_NOTIFICATIONS_ON, options[0]);
+        outState.putInt(MainActivity.IS_UKRAINIAN_ON, options[1]);
+        outState.putInt(MainActivity.IS_DARK_MODE_ON, options[2]);
     }
 
     // find ARITHMETIC AVERAGE (MEAN) value

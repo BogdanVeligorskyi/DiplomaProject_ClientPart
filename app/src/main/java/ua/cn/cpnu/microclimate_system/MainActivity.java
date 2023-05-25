@@ -114,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra(MainActivity.ROOMS_ARRAY, roomsArr);
                         intent.putExtra(MainActivity.SENSORS_ARRAY, sensorsArr);
                         intent.putExtra(MainActivity.POSITION, position);
+                        intent.putExtra
+                                (MainActivity.IS_NOTIFICATIONS_ON, options[0]);
+                        intent.putExtra(MainActivity.IS_UKRAINIAN_ON, options[1]);
+                        intent.putExtra(MainActivity.IS_DARK_MODE_ON, options[2]);
                         startActivity(intent);
                     }
                 });

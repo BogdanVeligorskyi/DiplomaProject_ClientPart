@@ -25,6 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
     private Room[] roomsArr;
     private Sensor[] sensorsArr;
     private Measurement[] measurementsArr;
+    private int[] options = new int[3];
     private int position = 0;
     private int current_sensor_id;
     private String datetime_1;
@@ -52,10 +53,16 @@ public class DetailsActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             roomsArr = (Room[]) savedInstanceState.getParcelableArray(MainActivity.ROOMS_ARRAY);
             sensorsArr = (Sensor[]) savedInstanceState.getParcelableArray(MainActivity.SENSORS_ARRAY);
+            options[0] = savedInstanceState.getInt(MainActivity.IS_NOTIFICATIONS_ON);
+            options[1] = savedInstanceState.getInt(MainActivity.IS_UKRAINIAN_ON);
+            options[2] = savedInstanceState.getInt(MainActivity.IS_DARK_MODE_ON);
         } else {
             Parcelable[] roomsArrParc = getIntent().getParcelableArrayExtra(MainActivity.ROOMS_ARRAY);
             Parcelable[] sensorsArrParc = getIntent().getParcelableArrayExtra(MainActivity.SENSORS_ARRAY);
             position = getIntent().getIntExtra(MainActivity.POSITION, 0);
+            options[0] = getIntent().getIntExtra(MainActivity.IS_NOTIFICATIONS_ON, 0);
+            options[1] = getIntent().getIntExtra(MainActivity.IS_UKRAINIAN_ON, 0);
+            options[2] = getIntent().getIntExtra(MainActivity.IS_DARK_MODE_ON, 0);
             roomsArr = new Room[roomsArrParc.length];
             sensorsArr = new Sensor[sensorsArrParc.length];
             for (int i = 0; i < roomsArr.length; i++) {
@@ -73,6 +80,10 @@ public class DetailsActivity extends AppCompatActivity {
         tvIP.setText(roomsArr[position].getDeviceIP());
 
         tvResults = findViewById(R.id.textview_measurements_results);
+        if (options[2] == 1) {
+            tvResults.setTextColor(getResources().getColor(R.color.black));
+        }
+
         edText_1 = findViewById(R.id.edittext_first_bound);
         edText_2 = findViewById(R.id.edittext_second_bound);
 
@@ -167,6 +178,9 @@ public class DetailsActivity extends AppCompatActivity {
             intent.putExtra(MEASUREMENTS_ARR, measurementsArr);
             intent.putExtra(MEASURE_NAME, sensorsArr[measurementsArr[0].getSensorId()-1].getName());
             intent.putExtra(MEASUREMENT_UNIT, sensorsArr[measurementsArr[0].getSensorId()-1].getMeasureUnit());
+            intent.putExtra(MainActivity.IS_NOTIFICATIONS_ON, options[0]);
+            intent.putExtra(MainActivity.IS_UKRAINIAN_ON, options[1]);
+            intent.putExtra(MainActivity.IS_DARK_MODE_ON, options[2]);
             startActivity(intent);
 
         });
@@ -234,7 +248,6 @@ public class DetailsActivity extends AppCompatActivity {
                 text += measurement.getDateime() + ", \t";
                 text += measurement.getValue() + measurement_unit + "\n";
             }
-
             tvResults.setText(text);
         }
     }
@@ -255,5 +268,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArray(MainActivity.ROOMS_ARRAY, roomsArr);
         outState.putParcelableArray(MainActivity.SENSORS_ARRAY, sensorsArr);
+        outState.putInt(MainActivity.IS_NOTIFICATIONS_ON, options[0]);
+        outState.putInt(MainActivity.IS_UKRAINIAN_ON, options[1]);
+        outState.putInt(MainActivity.IS_DARK_MODE_ON, options[2]);
     }
 }
