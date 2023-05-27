@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="start"
-            android:text="Select sensor"
+            android:text="@string/select_sensor"
             android:layout_marginStart="25dp"
             android:textSize="18sp"/>
 
@@ -45,49 +45,73 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select bounds of measurements for further processing:"
+            android:text="Select bounds of measurements:"
             android:layout_gravity="start"
             android:layout_marginStart="25dp"
             android:textSize="18sp"/>
 
-        <EditText
-            android:id="@+id/edittext_first_bound"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:text="Text Example: 2022-05-02"
-            android:inputType="time"/>
-
-        <EditText
-            android:id="@+id/edittext_second_bound"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <EditText
+                android:id="@+id/edittext_first_bound"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="50"
+                android:text="02-05-2023"
+                android:inputType="datetime" />
+
+            <EditText
+                android:id="@+id/edittext_second_bound"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="50"
+
+                android:text="04-05-2023"
+                android:inputType="datetime"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:text="Text Example: 2022-05-20"
-            android:inputType="time"/>
-
-        <Button
-            android:id="@+id/find_measurements_button"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Find measurements"/>
-
-        <Button
-            android:id="@+id/actual_measurements_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Actual measurements"/>
+            android:orientation="horizontal"
+            android:weightSum="100">
+            <Button
+                android:id="@+id/actual_measurements_button"
+                android:layout_width="0dp"
+                android:maxWidth="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:text="Actual"/>
+            <Button
+                android:id="@+id/find_measurements_button"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:maxWidth="150dp"
+                android:layout_weight="50"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:text="Find"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textview_measurements"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="start"
-            android:text="Measurements"
+            android:text="@string/measurements"
             android:layout_marginStart="25dp"
             android:textSize="18sp"/>
 
@@ -109,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Statistics"/>
+            android:text="@string/statistics"/>
 
     </LinearLayout>
 </ScrollView>

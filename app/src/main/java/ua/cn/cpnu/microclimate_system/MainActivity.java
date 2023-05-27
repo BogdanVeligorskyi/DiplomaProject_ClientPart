@@ -8,6 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -122,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkTheme();
         initListView();
+        registerForContextMenu(listView);
     }
 
     // switch theme after closing 'Options' screen if it was changed

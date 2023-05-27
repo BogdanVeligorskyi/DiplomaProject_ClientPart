@@ -20,7 +20,7 @@ public class AppClient implements Runnable {
 
     // server data
     private final String SERVER_IP = "192.168.0.115";
-    private final int PORT = 50020;
+    private final int PORT = 50028;
 
     // variables and objects
     private Socket clientSocket;

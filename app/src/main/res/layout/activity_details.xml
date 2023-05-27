@@ -50,40 +50,63 @@
         android:layout_gravity="start"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:text="Select date (time) bounds of measurements for further processing:"
+        android:text="Select date (time) bounds of measurements:"
         android:textSize="18sp"/>
 
-    <EditText
-        android:id="@+id/edittext_first_bound"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:text="02-05-2023"
-        android:inputType="time" />
+        android:orientation="horizontal"
+        android:weightSum="100">
 
-    <EditText
-        android:id="@+id/edittext_second_bound"
+        <EditText
+            android:id="@+id/edittext_first_bound"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="50"
+            android:text="02-05-2023"
+            android:inputType="datetime" />
+
+        <EditText
+            android:id="@+id/edittext_second_bound"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="50"
+
+            android:text="04-05-2023"
+            android:inputType="datetime"/>
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:text="04-05-2023"
-        android:inputType="time"/>
-
-    <Button
-        android:id="@+id/find_measurements_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Find measurements"/>
-
-    <Button
-        android:id="@+id/actual_measurements_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Actual measurements"/>
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <Button
+            android:id="@+id/actual_measurements_button"
+            android:layout_width="0dp"
+            android:maxWidth="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="Actual"/>
+        <Button
+            android:id="@+id/find_measurements_button"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:maxWidth="150dp"
+            android:layout_weight="50"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="Find"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textview_measurements"
@@ -95,8 +118,9 @@
         android:textSize="18sp"/>
 
     <ScrollView
+        android:id="@+id/details_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="320dp"
         android:background="@drawable/border">
     <TextView
         android:id="@+id/textview_measurements_results"

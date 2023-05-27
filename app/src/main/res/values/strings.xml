@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Microclimate_System</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="app_version">App version: 1.0</string>
+    <string name="available_devices">Available devices</string>
+    <string name="scan_devices">+</string>
+    <string name="select_sensor">Select sensor</string>
+    <string name="find_values">Find values</string>
+    <string name="actual_values">Actual values</string>
+    <string name="measurements">Measurements</string>
+    <string name="statistics">Statistics</string>
 </resources>

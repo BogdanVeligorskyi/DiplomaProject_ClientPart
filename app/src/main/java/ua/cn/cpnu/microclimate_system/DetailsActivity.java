@@ -3,6 +3,7 @@ package ua.cn.cpnu.microclimate_system;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -57,6 +58,7 @@ public class DetailsActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             roomsArr = (Room[]) savedInstanceState.getParcelableArray(MainActivity.ROOMS_ARRAY);
             sensorsArr = (Sensor[]) savedInstanceState.getParcelableArray(MainActivity.SENSORS_ARRAY);
+            position = savedInstanceState.getInt(MainActivity.POSITION);
             options[0] = savedInstanceState.getInt(MainActivity.IS_NOTIFICATIONS_ON);
             options[1] = savedInstanceState.getInt(MainActivity.IS_UKRAINIAN_ON);
             options[2] = savedInstanceState.getInt(MainActivity.IS_DARK_MODE_ON);
@@ -85,7 +87,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         tvResults = findViewById(R.id.textview_measurements_results);
         if (options[2] == 1) {
-            tvResults.setTextColor(getResources().getColor(R.color.black));
+            tvResults.setBackgroundColor(Color.DKGRAY);
         }
 
         edText_1 = findViewById(R.id.edittext_first_bound);
@@ -176,12 +178,12 @@ public class DetailsActivity extends AppCompatActivity {
         findViewById(R.id.statistics_button).setOnClickListener(button -> {
             Intent intent = new Intent
                     (this, StatisticsActivity.class);
-            intent.putExtra(SENSOR_NAME, sensorsArr[measurementsArr[0].getSensorId()-1].getName());
+            intent.putExtra(SENSOR_NAME, getSensorNameBySensorId(measurementsArr[0].getSensorId()));
             intent.putExtra(DATETIME_1, datetime_1);
             intent.putExtra(DATETIME_2, datetime_2);
             intent.putExtra(MEASUREMENTS_ARR, measurementsArr);
-            intent.putExtra(MEASURE_NAME, sensorsArr[measurementsArr[0].getSensorId()-1].getName());
-            intent.putExtra(MEASUREMENT_UNIT, sensorsArr[measurementsArr[0].getSensorId()-1].getMeasureUnit());
+            intent.putExtra(MEASURE_NAME, getMeasureBySensorId(measurementsArr[0].getSensorId()));
+            intent.putExtra(MEASUREMENT_UNIT, getMeasurementUnitBySensorId(measurementsArr[0].getSensorId()));
             intent.putExtra(MainActivity.IS_NOTIFICATIONS_ON, options[0]);
             intent.putExtra(MainActivity.IS_UKRAINIAN_ON, options[1]);
             intent.putExtra(MainActivity.IS_DARK_MODE_ON, options[2]);
@@ -226,7 +228,7 @@ public class DetailsActivity extends AppCompatActivity {
             Toast.makeText(context,"Measurements haven`t been found!", Toast.LENGTH_LONG).show();
         } else {
             String text = "";
-            String unit_measurement = sensorsArr[measurementsArr[0].getSensorId()-1].getMeasureUnit();
+            String unit_measurement = getMeasurementUnitBySensorId(measurementsArr[0].getSensorId());
             for (Measurement measurement : measurementsArr) {
                 text += measurement.getDateime() + ", \t";
                 text += measurement.getValue() + unit_measurement + "\n";
@@ -249,8 +251,8 @@ public class DetailsActivity extends AppCompatActivity {
             String text = "";
             boolean is_norm = true;
             for (Measurement measurement : measurementsArr) {
-                String measurement_unit = sensorsArr[measurement.getSensorId()-1].getMeasureUnit();
-                String measure = sensorsArr[measurement.getSensorId()-1].getMeasure();
+                String measurement_unit = getMeasurementUnitBySensorId(measurement.getSensorId());
+                String measure = getMeasureBySensorId(measurement.getSensorId());
                 if (measure.contains("CO") && measurement.getValue() > 55.0) {
                     is_norm = false;
                 }
@@ -300,5 +302,33 @@ public class DetailsActivity extends AppCompatActivity {
         outState.putInt(MainActivity.IS_NOTIFICATIONS_ON, options[0]);
         outState.putInt(MainActivity.IS_UKRAINIAN_ON, options[1]);
         outState.putInt(MainActivity.IS_DARK_MODE_ON, options[2]);
+        outState.putInt(MainActivity.POSITION, position);
+    }
+
+    private String getMeasurementUnitBySensorId(int sensor_id) {
+        for (Sensor sensor : sensorsArr) {
+            if (sensor.getId() == sensor_id) {
+                return sensor.getMeasureUnit();
+            }
+        }
+        return "";
+    }
+
+    private String getMeasureBySensorId(int sensor_id) {
+        for (Sensor sensor : sensorsArr) {
+            if (sensor.getId() == sensor_id) {
+                return sensor.getMeasure();
+            }
+        }
+        return "";
+    }
+
+    private String getSensorNameBySensorId(int sensor_id) {
+        for (Sensor sensor : sensorsArr) {
+            if (sensor.getId() == sensor_id) {
+                return sensor.getName();
+            }
+        }
+        return "";
     }
 }
