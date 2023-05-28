@@ -1,4 +1,4 @@
-package ua.cn.cpnu.microclimate_system;
+package ua.cn.cpnu.microclimate_system.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -8,12 +8,12 @@
         android:id="@+id/statistics_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:paddingBottom="5dp"
         android:gravity="center_horizontal"
-        android:text="Statistics for ..."
+        android:text="@string/statistics_for"
         android:textStyle="bold"
         android:textSize="23sp"/>
 
@@ -23,16 +23,17 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:padding="2dp"
-        android:text="Since ... to ..."
+        android:text="@string/since_to"
         android:textSize="18sp"/>
 
     <TableRow
         android:layout_gravity="center"
-        android:weightSum="4.0">
+        android:weightSum="4.0"
+        android:paddingTop="5dp">
         <TextView
             android:layout_weight="2.0"
             android:gravity="center_horizontal"
-            android:text="Arithmetic Mean"/>
+            android:text="@string/arithmetic_mean"/>
         <TextView
             android:id="@+id/arithmetic_mean_value"
             android:gravity="center_horizontal"
@@ -45,7 +46,7 @@
         <TextView
             android:layout_weight="2.0"
             android:gravity="center_horizontal"
-            android:text="Dispersion"/>
+            android:text="@string/dispersion"/>
         <TextView
             android:id="@+id/dispersion_value"
             android:gravity="center_horizontal"
@@ -58,7 +59,7 @@
         <TextView
             android:layout_weight="2.0"
             android:gravity="center_horizontal"
-            android:text="Standard Deviation"/>
+            android:text="@string/standard_deviation"/>
         <TextView
             android:id="@+id/standard_deviation_value"
             android:gravity="center_horizontal"
@@ -71,7 +72,7 @@
         <TextView
             android:layout_weight="2.0"
             android:gravity="center_horizontal"
-            android:text="Maximum Value"/>
+            android:text="@string/maximum_value"/>
         <TextView
             android:id="@+id/maximum_value"
             android:gravity="center_horizontal"
@@ -80,11 +81,12 @@
     </TableRow>
     <TableRow
         android:layout_gravity="center"
-        android:weightSum="4.0">
+        android:weightSum="4.0"
+        android:paddingBottom="5dp">
         <TextView
             android:layout_weight="2.0"
             android:gravity="center_horizontal"
-            android:text="Minimum value"/>
+            android:text="@string/minimum_value"/>
         <TextView
             android:id="@+id/minimum_value"
             android:gravity="center_horizontal"

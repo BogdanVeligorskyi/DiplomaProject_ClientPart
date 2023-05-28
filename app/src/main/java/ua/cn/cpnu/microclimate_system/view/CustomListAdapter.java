@@ -1,5 +1,4 @@
-package ua.cn.cpnu.microclimate_system;
-
+package ua.cn.cpnu.microclimate_system.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import ua.cn.cpnu.microclimate_system.R;
 
 public class CustomListAdapter extends ArrayAdapter {
 

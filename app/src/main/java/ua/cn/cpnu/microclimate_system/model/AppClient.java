@@ -1,7 +1,8 @@
-package ua.cn.cpnu.microclimate_system;
+package ua.cn.cpnu.microclimate_system.model;
 
 import android.content.Context;
 import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +17,17 @@ public class AppClient implements Runnable {
     public static final int ACTION_GET_MEASUREMENTS = 2;
     public static final int ACTION_GET_ACTUAL = 3;
 
+    // static variable which is TRUE when server responded exactly
     public static boolean IS_SUCCESS = false;
+
+    // string constants
+    private static final String GET_DEVICES = "GET_DEVICES";
+    private static final String GET_SENSORS = "GET_SENSORS";
+    private static final String GET_MEASUREMENTS = "GET_MEASUREMENTS";
+    private static final String GET_ACTUAL = "GET_ACTUAL";
+    private static final String NO_DEVICES = "No devices";
+    private static final String NO_SENSORS = "No sensors";
+    private static final String NO_MEASUREMENTS = "No measurements";
 
     // server data
     private final String SERVER_IP = "192.168.0.115";
@@ -48,7 +59,7 @@ public class AppClient implements Runnable {
 
     // constructor for ACTION 2 (get measurements from server)
     public AppClient(Context context, int action, int sensor_id,
-                      String datetime_1, String datetime_2) {
+                     String datetime_1, String datetime_2) {
         this.context = context;
         this.action = action;
         this.sensor_id = sensor_id;
@@ -72,19 +83,19 @@ public class AppClient implements Runnable {
     }
 
     // try to connect to server
-    private void startConnection(String ip, int port) throws IOException {
+    private void startConnection() throws IOException {
         while (clientSocket == null) {
-            clientSocket = new Socket(ip, port);
+            clientSocket = new Socket(SERVER_IP, PORT);
         }
         out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        in = new BufferedReader(new InputStreamReader
+                (clientSocket.getInputStream()));
     }
 
     // send message to server and retrieve answer
     private String sendMessage(String msg) throws IOException {
         out.println(msg);
-        String resp = in.readLine();
-        return resp;
+        return in.readLine();
     }
 
     // disconnect from server
@@ -96,18 +107,19 @@ public class AppClient implements Runnable {
 
     @Override
     public void run() {
+        // get devices and sensors
         if (action == ACTION_GET_DEVICES) {
             try {
-                startConnection(SERVER_IP, PORT);
-                String response = sendMessage("GET_DEVICES");
+                startConnection();
+                String response = sendMessage(GET_DEVICES);
                 Log.d("RECEIVED devices", response);
-                if (!response.startsWith("No devices")) {
+                if (!response.startsWith(NO_DEVICES)) {
                     response = response.substring(response.indexOf(":") + 1);
                     FileProcessing.saveDevices(context, response);
                 }
-                response = sendMessage("GET_SENSORS");
+                response = sendMessage(GET_SENSORS);
                 Log.d("RECEIVED sensors", response);
-                if (!response.startsWith("No sensors")) {
+                if (!response.startsWith(NO_SENSORS)) {
                     response = response.substring(response.indexOf(":") + 1);
                     FileProcessing.saveSensors(context, response);
                     IS_SUCCESS = true;
@@ -118,13 +130,15 @@ public class AppClient implements Runnable {
                 e.printStackTrace();
             }
         }
+        // get measurements in time interval
         if (action == ACTION_GET_MEASUREMENTS) {
             try {
-                startConnection(SERVER_IP, PORT);
-                String response = sendMessage("GET_MEASUREMENTS:" + sensor_id + "," + datetime_1
+                startConnection();
+                String response = sendMessage(
+                        GET_MEASUREMENTS + ":" + sensor_id + "," + datetime_1
                         + "," + datetime_2);
                 Log.d("RECEIVED measurements", response);
-                if (!response.startsWith("No measurements")) {
+                if (!response.startsWith(NO_MEASUREMENTS)) {
                     response = response.substring(response.indexOf(":") + 1);
                     FileProcessing.saveMeasurements(context, response);
                     IS_SUCCESS = true;
@@ -134,18 +148,19 @@ public class AppClient implements Runnable {
                 e.printStackTrace();
             }
         }
+        // get actual measurements from sensors in specific room
         if (action == ACTION_GET_ACTUAL) {
             try {
-                startConnection(SERVER_IP, PORT);
-                String response = sendMessage("GET_ACTUAL:" + room_id + "," + sensorsNum);
+                startConnection();
+                String response = sendMessage(
+                        GET_ACTUAL + ":" + room_id + "," + sensorsNum);
                 Log.d("RECEIVED measurements", response);
-                if (!response.startsWith("No measurements")) {
+                if (!response.startsWith(NO_MEASUREMENTS)) {
                     response = response.substring(response.indexOf(":") + 1);
                     FileProcessing.saveActualMeasurements(context, response);
                     IS_SUCCESS = true;
                 }
                 stopConnection();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

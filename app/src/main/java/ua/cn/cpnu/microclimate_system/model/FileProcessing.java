@@ -1,4 +1,4 @@
-package ua.cn.cpnu.microclimate_system;
+package ua.cn.cpnu.microclimate_system.model;
 
 import android.content.Context;
 import android.util.Log;
@@ -202,24 +202,6 @@ public class FileProcessing {
         return measurementsArr;
     }
 
-
-    // save options to settings.txt file
-    public static void saveOptions(Context context, int[] options) throws IOException {
-        try {
-            OutputStreamWriter outputStreamWriter =
-                    new OutputStreamWriter
-                            (context.openFileOutput(SETTINGS_FILENAME,
-                                    Context.MODE_PRIVATE));
-            outputStreamWriter.write("notifications=" + options[0] + "\n"
-                    + "language=" + options[1] + "\n"
-                    + "theme=" + options[2]);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e);
-        }
-    }
-
     // save measurements to measurements.txt file
     public static void saveMeasurements(Context context, String text) throws IOException {
         try {
@@ -263,7 +245,7 @@ public class FileProcessing {
         BufferedReader reader = new BufferedReader
                 (new InputStreamReader(is));
         String s;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             s = reader.readLine();
             if (s.length() == 0) {
                 return null;
@@ -272,5 +254,21 @@ public class FileProcessing {
             optionsValues[i] = Integer.parseInt(rowParts[1]);
         }
         return optionsValues;
+    }
+
+    // save options to settings.txt file
+    public static void saveOptions(Context context, int[] options) throws IOException {
+        try {
+            OutputStreamWriter outputStreamWriter =
+                    new OutputStreamWriter
+                            (context.openFileOutput(SETTINGS_FILENAME,
+                                    Context.MODE_PRIVATE));
+            outputStreamWriter.write("notifications=" + options[0] + "\n"
+                    + "theme=" + options[1]);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e);
+        }
     }
 }

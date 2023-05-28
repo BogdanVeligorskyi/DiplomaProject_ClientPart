@@ -8,17 +8,16 @@
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Microclimate Monitoring System"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Microclimate_System"
         tools:targetApi="21">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -27,27 +26,27 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".OptionsActivity"
-            android:label="Options"
-            android:parentActivityName=".MainActivity"
+            android:name=".view.OptionsActivity"
+            android:label="@string/label_options"
+            android:parentActivityName=".view.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".DetailsActivity"
-            android:label="Details"
-            android:parentActivityName=".MainActivity"
+            android:name=".view.DetailsActivity"
+            android:label="@string/label_details"
+            android:parentActivityName=".view.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".StatisticsActivity"
-            android:label="Statistics"
-            android:parentActivityName=".MainActivity"
+            android:name=".view.StatisticsActivity"
+            android:label="@string/label_statistics"
+            android:parentActivityName=".view.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

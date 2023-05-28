@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:padding="10dp"
         android:text="192.168.0.115"
         android:textSize="18sp"/>
 
@@ -32,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="25dp"
-        android:text="Select sensor"
+        android:text="@string/select_sensor"
         android:textSize="18sp"/>
 
     <Spinner
@@ -42,7 +43,8 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +52,9 @@
         android:layout_gravity="start"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:text="Select date (time) bounds of measurements:"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/select_bounds_of_measurements"
         android:textSize="18sp"/>
 
     <LinearLayout
@@ -63,10 +67,12 @@
             android:id="@+id/edittext_first_bound"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="50"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:gravity="center_horizontal"
-            android:layout_weight="50"
             android:text="02-05-2023"
             android:inputType="datetime" />
 
@@ -74,11 +80,12 @@
             android:id="@+id/edittext_second_bound"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="50"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:gravity="center_horizontal"
-            android:layout_weight="50"
-
             android:text="04-05-2023"
             android:inputType="datetime"/>
 
@@ -90,22 +97,26 @@
         android:weightSum="100">
         <Button
             android:id="@+id/actual_measurements_button"
-            android:layout_width="0dp"
             android:maxWidth="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
-            android:text="Actual"/>
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/actual_values"/>
         <Button
             android:id="@+id/find_measurements_button"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
             android:maxWidth="150dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="50"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
-            android:text="Find"/>
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/find_values"/>
     </LinearLayout>
 
     <TextView
@@ -114,29 +125,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="25dp"
-        android:text="Measurements"
+        android:text="@string/measurements"
         android:textSize="18sp"/>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/details_scrollview"
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:background="@drawable/border">
-    <TextView
-        android:id="@+id/textview_measurements_results"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:padding="5dp"
-        android:textSize="15sp"/>
-    </ScrollView>
+        <TextView
+            android:id="@+id/textview_measurements_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:padding="5dp"
+            android:textSize="15sp"/>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/statistics_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Statistics"/>
+        android:text="@string/statistics"/>
 
 </LinearLayout>
