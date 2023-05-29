@@ -35,4 +35,6 @@
     <string name="no_sensors_in_device">This device has no sensors!</string>
     <string name="no_devices">Devices haven`t been found!</string>
     <string name="no_sensors">Sensors haven`t been found!</string>
+    <string name="ip_address">Server IP</string>
+    <string name="port">Port</string>
 </resources>

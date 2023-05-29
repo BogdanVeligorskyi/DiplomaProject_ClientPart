@@ -12,6 +12,7 @@ public class FileProcessing {
 
     // filenames
     public static final String SETTINGS_FILENAME = "settings.txt";
+    public static final String NETWORK_FILENAME = "network.txt";
     public static final String DEVICES_FILENAME = "devices.txt";
     public static final String SENSORS_FILENAME = "sensors.txt";
     public static final String MEASUREMENTS_FILENAME = "measurements.txt";
@@ -270,5 +271,40 @@ public class FileProcessing {
         catch (IOException e) {
             Log.e("Exception", "File write failed: " + e);
         }
+    }
+
+
+    // save connection data to network.txt file
+    public static void saveNetwork(Context context, String ip, String port) throws IOException {
+        try {
+            OutputStreamWriter outputStreamWriter =
+                    new OutputStreamWriter
+                            (context.openFileOutput(NETWORK_FILENAME,
+                                    Context.MODE_PRIVATE));
+            outputStreamWriter.write("ip=" + ip + "\n"
+                    + "port=" + port);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e);
+        }
+    }
+
+    // load network data from network.txt file
+    public static String[] loadNetwork(Context context) throws IOException {
+        InputStream is = context.openFileInput(NETWORK_FILENAME);
+        String[] networkValues = new String[2];
+        BufferedReader reader = new BufferedReader
+                (new InputStreamReader(is));
+        String s;
+        for (int i = 0; i < 2; i++) {
+            s = reader.readLine();
+            if (s.length() == 0) {
+                return null;
+            }
+            String[] rowParts = s.split("=");
+            networkValues[i] = rowParts[1];
+        }
+        return networkValues;
     }
 }

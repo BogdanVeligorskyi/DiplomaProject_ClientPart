@@ -20,7 +20,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+
 import ua.cn.cpnu.microclimate_system.R;
 import ua.cn.cpnu.microclimate_system.model.AppClient;
 import ua.cn.cpnu.microclimate_system.model.FileProcessing;
@@ -89,6 +94,13 @@ public class DetailsActivity extends AppCompatActivity {
         edText_1 = findViewById(R.id.edittext_first_bound);
         edText_2 = findViewById(R.id.edittext_second_bound);
         tvResults = findViewById(R.id.textview_measurements_results);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH");
+        Date date = new Date();
+        System.out.println(formatter.format(date));
+        edText_1.setText(formatter.format(date));
+        edText_2.setText(formatter.format(date));
+
         checkTheme();
 
         tvDevice.setText(roomsArr[position].getDevice() + " | " + roomsArr[position].getName());
@@ -227,7 +239,7 @@ public class DetailsActivity extends AppCompatActivity {
             String unit_measurement = getMeasurementUnitBySensorId(measurementsArr[0].getSensorId());
             for (Measurement measurement : measurementsArr) {
                 text += measurement.getDateime() + ", \t";
-                text += measurement.getValue() + unit_measurement + "\n";
+                text += measurement.getValue() + " " + unit_measurement + "\n";
             }
             tvResults.setText(text);
             butStat.setEnabled(true);
@@ -254,7 +266,7 @@ public class DetailsActivity extends AppCompatActivity {
                 }
                 text += "Sensor id: " + measurement.getSensorId() + ", \t";
                 text += measurement.getDateime() + ", \t";
-                text += measurement.getValue() + measurement_unit + "\n";
+                text += measurement.getValue() + " " + measurement_unit + "\n";
             }
             tvResults.setText(text);
 

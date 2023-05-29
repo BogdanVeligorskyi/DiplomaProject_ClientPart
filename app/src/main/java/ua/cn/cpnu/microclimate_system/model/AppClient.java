@@ -29,10 +29,6 @@ public class AppClient implements Runnable {
     private static final String NO_SENSORS = "No sensors";
     private static final String NO_MEASUREMENTS = "No measurements";
 
-    // server data
-    private final String SERVER_IP = "192.168.0.115";
-    private final int PORT = 50028;
-
     // variables and objects
     private Socket clientSocket;
     private PrintWriter out;
@@ -84,8 +80,17 @@ public class AppClient implements Runnable {
 
     // try to connect to server
     private void startConnection() throws IOException {
+        String[] networkData = FileProcessing.loadNetwork(context);
+        String ip = "192.168.0.115";
+        int port = 50028;
+        if (networkData != null) {
+            ip = networkData[0];
+            port = Integer.parseInt(networkData[1]);
+        }
+        Log.d("SERVER_IP", ip);
+        Log.d("PORT", ""+port);
         while (clientSocket == null) {
-            clientSocket = new Socket(SERVER_IP, PORT);
+            clientSocket = new Socket(ip, port);
         }
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader

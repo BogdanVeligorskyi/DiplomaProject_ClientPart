@@ -52,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 if (options == null) {
                     options = new int[2];
                 }
-                /*options[0] = 1;
-                options[1] = 1;
-                FileProcessing.saveOptions(getApplicationContext(), options);*/
                 options = FileProcessing.loadOptions(getApplicationContext());
             } catch (IOException e) {
                 e.printStackTrace();

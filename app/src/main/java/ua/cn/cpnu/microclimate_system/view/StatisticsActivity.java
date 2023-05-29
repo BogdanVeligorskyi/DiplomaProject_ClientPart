@@ -66,11 +66,11 @@ public class StatisticsActivity extends AppCompatActivity {
             double deviation = findDeviation(disp);
             int max = findMaxValue();
             int min = findMinValue();
-            tvAverage.setText(avg + measurement_unit);
-            tvDispersion.setText(disp + measurement_unit);
-            tvDeviation.setText(deviation + measurement_unit);
-            tvMax.setText(max + measurement_unit);
-            tvMin.setText(min + measurement_unit);
+            tvAverage.setText(avg + " " + measurement_unit);
+            tvDispersion.setText(disp + " " + measurement_unit + "^2");
+            tvDeviation.setText(deviation + " " + measurement_unit);
+            tvMax.setText(max + " " + measurement_unit);
+            tvMin.setText(min + " " + measurement_unit);
         }
 
         TextView tvLabel = findViewById(R.id.statistics_label);
@@ -83,12 +83,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
         LineChart mpLineChart = findViewById(R.id.statistics_line_chart);
 
-        LineDataSet lineDataSet1 = new LineDataSet(dataValues(), measure_name + ", " + measurement_unit);
+        LineDataSet lineDataSet = new LineDataSet(dataValues(),
+                measure_name + ", " + measurement_unit);
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet1);
+        dataSets.add(lineDataSet);
 
         LineData data = new LineData(dataSets);
         mpLineChart.setData(data);
+        mpLineChart.getDescription().setText("");
         mpLineChart.invalidate();
         mpLineChart.setDrawGridBackground(false);
 

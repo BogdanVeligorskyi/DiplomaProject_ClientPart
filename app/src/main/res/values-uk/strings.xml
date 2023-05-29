@@ -35,4 +35,6 @@
     <string name="no_sensors_in_device">Цей пристрій не містить датчиків!</string>
     <string name="no_devices">Пристрої не були знайдені!</string>
     <string name="no_sensors">Датчики не були знайдені!</string>
+    <string name="ip_address">IP сервера</string>
+    <string name="port">Порт</string>
 </resources>
