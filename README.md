@@ -1,9 +1,9 @@
 # Microclimate Monitoring System (Android App on Java)
 
-![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screen_1.png?raw=true)
-![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screen_2.png?raw=true)
-![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screen_3.png?raw=true)
-![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screen_4.png?raw=true)
+![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screens/screen_1.jpg?raw=true)
+![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screens/screen_2.jpg?raw=true)
+![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screens/screen_3.jpg?raw=true)
+![alt text](https://github.com/BogdanVeligorskyi/DiplomaProject_ClientPart/blob/main/screens/screen_4.jpg?raw=true)
 
 Application for mobile devices which is used for looking through all measurements from server side.
 
